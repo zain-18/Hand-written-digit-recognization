@@ -1,6 +1,4 @@
-from fileinput import filename
-from itertools import count
-import pickle as pk
+import pickle 
 import numpy as np 
 import streamlit as st
 import cv2
@@ -9,12 +7,18 @@ import cv2
 
 global pca,pred,model,image
 global result
-result='Predicted value'
-global Count
 
-pca=pk.load(open('pca.pkl','rb'))
+global Count 
+Count=0
 
-model=pk.load(open('model.pkl','rb'))
+#pca=pk.load(open('pca.pkl','rb'))
+#model=pk.load(open('model.pkl','rb'))
+
+pickle_pca = open("pca.pkl","rb")
+pca=pickle.load(pickle_pca)
+
+pickle_model = open("model.pkl","rb")
+model=pickle.load(pickle_model)
 
 
 st.subheader('Hand Written Digit Recognizer')
@@ -48,13 +52,15 @@ with col1:
     if st.button('Click to Predict'):
         pred = model.predict(img_pca)
         result = pred[0]
-        count=1
+        Count=1
+        
 
 with col2:
-    if count==1:
-     st.write('Predicted Value = '+result)
+    if Count==1:
+        st.write('Predicted Value = '+result)
     else:
-        st.write('.....')
+        st.write('......')
+   
    
     
    
